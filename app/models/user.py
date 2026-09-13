@@ -6,7 +6,7 @@ Base = declarative_base()
 
 class User(Base):
     __tablename__ = "users"
-    id = Column(BigInteger, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True)
     email = Column(String(255), unique=True, index=True, nullable=False)
     age = Column(Integer, CheckConstraint('age >= 0', name='check_age_non_negative'))
     is_active = Column(Boolean, default=True, nullable=False)

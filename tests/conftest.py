@@ -9,7 +9,7 @@ import os
 
 DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 async def db_engine():
     engine = create_async_engine(DATABASE_URL, echo=True)
     async with engine.begin() as conn:
