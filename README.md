@@ -27,3 +27,12 @@ The project utilizes the **Repository Pattern** to abstract database operations.
 - `get_users`: Fetches a paginated list of users.
 - `update_user`: Updates existing user data.
 - `delete_user`: Removes a user from the database.
+
+## API Endpoints
+| Method | Endpoint | Description | Status Codes |
+| :--- | :--- | :--- | :--- |
+| POST | `/api/v1/users/` | Create User | 201, 409 |
+| GET | `/api/v1/users/` | List Users | 200 |
+| GET | `/api/v1/users/{id}` | Get User | 200, 404 |
+| PUT | `/api/v1/users/{id}` | Update User | 200, 404 |
+| DELETE | `/api/v1/users/{id}` | Delete User | 204, 404 |
