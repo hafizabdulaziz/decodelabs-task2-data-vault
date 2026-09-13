@@ -1,3 +1,4 @@
+# .github/workflows/ci.yml
 name: CI
 on: [push, pull_request]
 jobs:
@@ -14,4 +15,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run tests
-        run: pytest
+        run: python -m pytest
+        env:
+          PYTHONPATH: ${{ github.workspace }}
