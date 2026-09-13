@@ -20,12 +20,16 @@ async def db_engine():
 @pytest.fixture
 async def db_session(db_engine):
     async with db_engine.connect() as connection:
+        # Start a transaction for each test
         transaction = await connection.begin()
-        session = AsyncSession(bind=connection, expire_on_commit=False)
+        # Bind the session to the connection, not the engine, for atomic transactions
+        session = AsyncSession(bind=connection, join_transaction_mode="create_savepoint")
         
         yield session
         
+        # Clean up
         await session.close()
+        # Rollback the transaction to ensure the DB remains clean
         await transaction.rollback()
         await connection.close()
 

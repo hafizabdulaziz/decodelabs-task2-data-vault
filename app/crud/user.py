@@ -15,7 +15,7 @@ async def get_user_by_email(db: AsyncSession, email: str) -> Optional[User]:
 
 async def get_users(db: AsyncSession, skip: int = 0, limit: int = 100) -> List[User]:
     result = await db.execute(select(User).offset(skip).limit(limit))
-    return result.scalars().all()
+    return list(result.scalars().all())
 
 async def create_user(db: AsyncSession, user: UserCreate) -> User:
     db_user = User(**user.model_dump())
@@ -25,10 +25,14 @@ async def create_user(db: AsyncSession, user: UserCreate) -> User:
     return db_user
 
 async def update_user(db: AsyncSession, user_id: int, user_update: UserUpdate) -> Optional[User]:
+    # Ensure the session doesn't expire attributes
     query = update(User).where(User.id == user_id).values(**user_update.model_dump(exclude_unset=True)).returning(User)
     result = await db.execute(query)
     await db.commit()
-    return result.scalar_one_or_none()
+    user = result.scalar_one_or_none()
+    if user:
+        await db.refresh(user) # Explicitly refresh to avoid lazy loading issues
+    return user
 
 async def delete_user(db: AsyncSession, user_id: int) -> bool:
     result = await db.execute(delete(User).where(User.id == user_id))

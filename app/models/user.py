@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, CheckConstraint, BigInteger
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, CheckConstraint
 from sqlalchemy.sql import func
 from sqlalchemy.orm import declarative_base
 
