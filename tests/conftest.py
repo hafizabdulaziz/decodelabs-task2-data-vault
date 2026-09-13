@@ -19,15 +19,15 @@ async def db_engine():
 
 @pytest.fixture
 async def db_session(db_engine):
-    connection = await db_engine.connect()
-    transaction = await connection.begin()
-    session = AsyncSession(bind=connection, expire_on_commit=False)
-    
-    yield session
-    
-    await session.close()
-    await transaction.rollback()
-    await connection.close()
+    async with db_engine.connect() as connection:
+        transaction = await connection.begin()
+        session = AsyncSession(bind=connection, expire_on_commit=False)
+        
+        yield session
+        
+        await session.close()
+        await transaction.rollback()
+        await connection.close()
 
 @pytest.fixture
 async def client(db_session):
