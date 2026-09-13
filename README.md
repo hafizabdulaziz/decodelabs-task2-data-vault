@@ -2,33 +2,25 @@
 
 A resilient Asynchronous Database Persistence Engine.
 
-## Architecture
-- FastAPI
-- SQLAlchemy 2.0 (Async)
-- Pydantic v2
-- Alembic
+## Features
+- FastAPI for high-performance API endpoints.
+- SQLAlchemy 2.0 (Async) with Pydantic v2.
+- Alembic for database migrations.
+- Comprehensive Test Suite (`pytest` + `httpx`).
+- CI/CD Pipelines (GitHub Actions & CodeQL).
 
-## Database Schema
-### ER Diagram
-[Placeholder for ER Diagram]
+## Installation
+1. Clone the repository: `git clone <url>`
+2. Create virtual environment: `python -m venv .venv`
+3. Install requirements: `pip install -r requirements.txt`
 
-### Schema Design
-- **users**:
-  - `id`: BigInteger (PK)
-  - `email`: String(255), Unique, Indexed
-  - `age`: Integer (>= 0)
-  - `is_active`: Boolean
-  - `created_at`: DateTime
+## Running Tests
+Run the test suite using `pytest`:
+```bash
+pytest
+```
 
-## CRUD Logic Design
-The project utilizes the **Repository Pattern** to abstract database operations.
-- `create_user`: Creates a new user entry.
-- `get_user_by_id`/`get_user_by_email`: Fetches user by unique identifiers.
-- `get_users`: Fetches a paginated list of users.
-- `update_user`: Updates existing user data.
-- `delete_user`: Removes a user from the database.
-
-## API Endpoints
+## API Documentation
 | Method | Endpoint | Description | Status Codes |
 | :--- | :--- | :--- | :--- |
 | POST | `/api/v1/users/` | Create User | 201, 409 |
