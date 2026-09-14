@@ -23,6 +23,7 @@ pytest
 ## API Documentation
 | Method | Endpoint | Description | Status Codes |
 | :--- | :--- | :--- | :--- |
+| POST | `/api/v1/auth/login` | Login/Get JWT | 200, 401 |
 | POST | `/api/v1/users/` | Create User | 201, 409 |
 | GET | `/api/v1/users/` | List Users | 200 |
 | GET | `/api/v1/users/{id}` | Get User | 200, 404 |
