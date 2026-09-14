@@ -8,7 +8,7 @@ class UserBase(BaseModel):
     is_active: bool = True
 
 class UserCreate(UserBase):
-    pass
+    password: str = Field(..., min_length=8)
 
 class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None

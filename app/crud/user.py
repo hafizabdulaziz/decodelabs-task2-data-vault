@@ -3,6 +3,7 @@ from sqlalchemy.future import select
 from sqlalchemy import delete, update
 from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
+from app.core.security import get_password_hash
 from typing import List, Optional
 
 async def get_user_by_id(db: AsyncSession, user_id: int) -> Optional[User]:
@@ -18,7 +19,9 @@ async def get_users(db: AsyncSession, skip: int = 0, limit: int = 100) -> List[U
     return list(result.scalars().all())
 
 async def create_user(db: AsyncSession, user: UserCreate) -> User:
-    db_user = User(**user.model_dump())
+    user_data = user.model_dump()
+    password = user_data.pop("password")
+    db_user = User(**user_data, hashed_password=get_password_hash(password))
     db.add(db_user)
     await db.commit()
     await db.refresh(db_user)
