@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from contextlib import asynccontextmanager
 from app.api.v1.api import api_router
 from app.core.database import engine
@@ -25,6 +25,10 @@ app = FastAPI(
     redoc_url=None,
     lifespan=lifespan
 )
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return Response(status_code=204)
 
 # Custom Scalar Documentation
 @app.get("/docs", include_in_schema=False)
