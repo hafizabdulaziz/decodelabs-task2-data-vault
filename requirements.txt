@@ -10,3 +10,5 @@ pytest
 pytest-asyncio
 httpx
 scalar-fastapi
+passlib[bcrypt]
+python-jose[cryptography]
